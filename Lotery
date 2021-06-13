@@ -1,0 +1,70 @@
+def Make_Lottery (StudentsIDs):
+    results = []
+    sum = 0
+
+    firstId = StudentsIDs[0]
+    secondId = StudentsIDs[1]
+    thirdId = StudentsIDs[2]
+    fourthId = StudentsIDs[3]
+
+    #add the first lottery number
+    Id = firstId % 10
+    if Id != 0:
+        results.append(Id)
+    else: results.append(Id+1)
+
+    #add the second lottery number
+    Id = secondId % 10
+    if Id == 9:
+        Id -= -1
+    if Id == 0:
+        Id += 1
+    results.append(Id+10)
+
+    #add the third lottery number
+    Id = (firstId + secondId) % 10
+    if Id == 9:
+        Id -= -1
+    if Id == 0:
+        Id += 1
+    if Id == results[1]:
+        Id += 1
+    results.append(Id+10)
+
+    # add the fourth lottery number
+    Id = thirdId % 10
+    if Id == 9:
+        if Id > 300000000:
+            results.append(19)
+        else: results.append(29)
+    if Id == 0:
+        Id += 1
+    results.append(Id + 20)
+
+    # add the fifth lottery number
+    Id = (thirdId + fourthId) % 10
+    if Id == 9:
+        if Id > 600000000 :
+            if results[3] != 19:
+                results.append(19)
+            else:
+                results.append(29)
+    if Id == 0:
+        Id += 1
+    results.append(Id + 20)
+
+    # add the last lottery number
+    Id = fourthId % 10
+    if Id != 0:
+        if Id > 6:
+            Id -= 3
+            results.append(Id+30)
+        else:
+            results.append(Id + 31)
+
+    return results
+
+studentsId = [316604529,318469897,207991290,205703507]
+r = Make_Lottery(studentsId)
+for i in range (len(r)):
+    print(r[i])
